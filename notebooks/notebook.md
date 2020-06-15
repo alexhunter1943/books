@@ -11,6 +11,13 @@
 - 创建github账户
 - 创建github代码仓库
 - 电脑安装git： apt-get install git 或者sudo apt-get install git
+- git clone 'url'
+- git status (ls -a 能看到.git文件夹)
+- git add .
+- git commit -m '添加你需要的注释'
+- git pull
+- git push (填写你的账户和密码)
+
 
 ### 前端vue3.0 优点
 - 前后端分离
@@ -60,6 +67,7 @@
 huawei matebook 14 16G （）
 
 ### 推荐编辑器： pycharm、 sublime text、 atom、 vs code、 vim或者vi
+
 个人习惯：
 
 - atom或者pycharm写python
