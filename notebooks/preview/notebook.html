@@ -1,0 +1,331 @@
+<html>
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>i5ting_ztree_toc:notebook</title>
+		<link href="toc/style/github-bf51422f4bb36427d391e4b75a1daa083c2d840e.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/style/github2-d731afd4f624c99a4b19ad69f3083cd6d02b81d5.css" media="all" rel="stylesheet" type="text/css"/>
+		<link href="toc/css/zTreeStyle/zTreeStyle.css" media="all" rel="stylesheet" type="text/css"/>
+	  <style>
+		pre {
+		    counter-reset: line-numbering;
+		    border: solid 1px #d9d9d9;
+		    border-radius: 0;
+		    background: #fff;
+		    padding: 0;
+		    line-height: 23px;
+		    margin-bottom: 30px;
+		    white-space: pre;
+		    overflow-x: auto;
+		    word-break: inherit;
+		    word-wrap: inherit;
+		}
+
+		pre a::before {
+		  content: counter(line-numbering);
+		  counter-increment: line-numbering;
+		  padding-right: 1em; /* space after numbers */
+		  width: 25px;
+		  text-align: right;
+		  opacity: 0.7;
+		  display: inline-block;
+		  color: #aaa;
+		  background: #eee;
+		  margin-right: 16px;
+		  padding: 2px 10px;
+		  font-size: 13px;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		pre a:first-of-type::before {
+		  padding-top: 10px;
+		}
+
+		pre a:last-of-type::before {
+		  padding-bottom: 10px;
+		}
+
+		pre a:only-of-type::before {
+		  padding: 10px;
+		}
+
+		.highlight { background-color: #ffffcc } /* RIGHT */
+		</style>
+  </head>
+  <body>
+	  <div>
+				<div style='width:25%;'>
+						<ul id="tree" class="ztree" style='width:100%'>
+
+						</ul>
+				</div>
+        <div id='readme' style='width:70%;margin-left:20%;'>
+          	<article class='markdown-body'>
+            	<h1 id="day000-">day000 起源、整体设计思路</h1>
+<p>小说站：前端vue3.0+后端flask+数据库mysql</p>
+<h2 id="-">起源</h2>
+<h2 id="-">项目构思 前后端分离</h2>
+<ul>
+<li>前端： react、vue、jquery+ajax： vue3.0</li>
+<li>后端： flask、 fastAPI ： flask</li>
+<li>数据库选择： mysql、 mongodb（不用建表）： 1000本书，100W章节内容： mysql</li>
+<li>数据采集： requests、scrapy：<h2 id="git-github-">git和github的简单使用</h2>
+</li>
+<li>创建github账户</li>
+<li>创建github代码仓库</li>
+<li>电脑安装git： apt-get install git 或者sudo apt-get install git</li>
+</ul>
+<h3 id="-vue3-0-">前端vue3.0 优点</h3>
+<ul>
+<li>前后端分离</li>
+<li>部署简单（哪怕你不懂怎么写代码也可以部署）</li>
+</ul>
+<p>用处： 从后端读取数据， 展示页面</p>
+<h3 id="-flask">后端：flask</h3>
+<ul>
+<li>简单</li>
+</ul>
+<p>用处： 给前端提供API接口，从数据库读取数据</p>
+<h3 id="-mysql">数据库：mysql</h3>
+<p>用处： 保存数据</p>
+<h3 id="scrapy-">scrapy 采集数据</h3>
+<ul>
+<li>requests， 耗时：10天</li>
+<li>scrapy： 10小时</li>
+</ul>
+<h2 id="-">项目展示</h2>
+<h2 id="-">环境配置 ： 统一的环境，能让你获得更好的观看体验</h2>
+<h3 id="-windows-vs-linux-vs-mac-os">题外话： windows VS linux VS Mac OS</h3>
+<h4 id="windows-">windows： 鼠标电脑（闭源）</h4>
+<ul>
+<li>桌面无敌</li>
+<li>使用简单</li>
+<li>非常适合一般用户</li>
+<li>没有window就没有现在如此繁华的市场</li>
+</ul>
+<h4 id="linux-">linux系： 键盘电脑（开源）</h4>
+<ul>
+<li>服务器无敌</li>
+<li>使用不难</li>
+<li>非常适合开发者</li>
+<li>没有linux就算有如此繁华的市场，服务器也支撑不了</li>
+</ul>
+<h4 id="mac-os-">mac OS： 软硬件结合的典范（闭源）</h4>
+<h4 id="-">总结：</h4>
+<p>都只是工具而已，哪个方便就用哪个</p>
+<h3 id="-ubuntu-macos">推荐系统： ubuntu、MacOS</h3>
+<p>huawei matebook 14 16G （）</p>
+<h3 id="-pycharm-sublime-text-atom-vs-code">推荐编辑器： pycharm、 sublime text、 atom、 vs code</h3>
+<p>个人习惯：</p>
+<ul>
+<li>atom或者pycharm写python</li>
+<li>vs code 写vue</li>
+</ul>
+<h1 id="day001-">day001 数据库的安装、迁移、权限分配，磁盘挂载，大文件的上传</h1>
+<h2 id="mysql-centos-">mysql的安装(centOS)</h2>
+<pre><code class="lang-python"># 下载rpm包
+wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
+# 对repo进行安装
+rpm -ivh mysql57-community-release-el7-9.noarch.rpm
+# 进入 /etc/yum.repos.d目录
+# 查看是否有 mysql-community.repo 和mysql-community-source.repo 文件
+# 安装
+yum install mysql-server
+# 启动
+systemctl start mysqld
+# 查看是否启动
+ps aux | grep mysql
+# 查看生成临时密码
+grep ‘temporary password‘ /var/log/mysqld.log
+# 进入mysql
+mysql -uroot -p  # 然后回车，输入上面提供的临时密码
+# 设置新的密码
+ALTER USER USER() IDENTIFIED BY &#39;你自己设置的密码&#39;; # MySQL版本5.7.6版本 开始的的版本
+# 或者
+SET PASSWORD = PASSWORD(&#39;你自己设置的密码&#39;); # MySQL版本5.7.6版本以前的版本
+# 关闭服务
+systemctl stop mysqld
+# 启动服务
+systemctl start mysqld
+# 登录你的mysql
+mysql -u root -p # 回车输入你的新密码
+</code></pre>
+<h2 id="-www-">挂载新的磁盘到/www文件夹下</h2>
+<pre><code class="lang-python">yum install wget -y &amp;&amp; wget -O auto_disk.sh http://download.bt.cn/tools/auto_disk.sh &amp;&amp; bash auto_disk.sh
+
+</code></pre>
+<h2 id="-mysql-">修改mysql数据库文件存放位置（前提是你要把上面的磁盘挂载完毕）</h2>
+<pre><code class="lang-python"># 进入/www文件夹
+cd /www
+# 创建data目录
+mkdir data
+# 查看当前mysql数据存放目录
+cat /etc/my.cnf  # 如果你都是按照上面安装的话，应该是/var/lib/mysql
+# 先停止mysql服务
+systemctl stop mysqld
+# 修改/etc/my.cnf
+# 用vim或者vi打开
+vim /etc/my.cnf
+&quot;&quot;&quot;
+datadir=/www/data/mysql
+socket=/www/data/mysql/mysql.sock
+&quot;&quot;&quot;
+# 移动/var/lib/mysql整个目录到新的文件夹/www/data/
+mv /var/lib/mysql /www/data/
+# 启动mysqld服务
+service mysqld start
+# 如果提示 Redirecting to /bin/systemctl start mysqld.service
+# 进行如下操作 这是因为没有关闭selinux导致的，关闭selinux然后重新启动mysqld服务
+setenforce 0
+getenforce
+service mysqld start # 这条必须不报错
+# 登录mysql
+mysql -u root -p # 输入你在上面修改之后的密码
+# 报错如下 ：ERROR 2002 (HY000): Can&#39;t connect to local MySQL server through socket &#39;/var/lib/mysql/mysql.sock&#39; (2)
+# 用vim或者vi打开配置文件
+vim /etc/my.cnf
+# 添加如下内容
+&quot;&quot;&quot;
+[client]
+socket=/www/data/mysql/mysql.sock
+&quot;&quot;&quot;
+# 再次登录mysql
+mysql -u root -p # 输入你在上面修改之后的密码，应该会成功了
+# 重启服务器
+reboot
+# 再次登录mysql
+mysql -u root -p # 输入你在上面修改之后的密码，应该会成功了
+# 如果还是登录不上
+# 查看错误原因
+service mysqld status
+# 如果显示如下开头内容
+&quot;&quot;&quot;
+Redirecting to /bin/systemctl status mysqld.service
+● mysqld.service - MySQL Server
+   Loaded: loaded (/usr/lib/systemd/system/mysqld.service; enabled;
+&quot;&quot;&quot;
+# 修改selinux配置文件/etc/selinux/config，让selinux永久工作在permissive模式下
+vi /etc/selinux/config
+&quot;&quot;&quot;
+SELINUX=permissive
+SELINUXTYPE=targeted
+&quot;&quot;&quot;
+# 再次重启，并尝试登录
+reboot
+
+mysql -u root -p # 输入你在上面修改之后的密码，应该会成功了
+
+</code></pre>
+<h2 id="-">大文件传输</h2>
+<ul>
+<li>github，不行 ： github上最大的单个文件是100M</li>
+<li>直接用scp，不行： scp传送的最大文件不能超过4G</li>
+<li>nc， 速度快，但是直接传送4G文件中途会断开; 目前我还不知道如何一次性批量传送多个文件： 没有成功</li>
+</ul>
+<p>如果有更好的办法，请告诉我！！！</p>
+<pre><code class="lang-python"># 直接在服务器上运行这条命令
+mysqldump -u root -p books &gt; books.sql
+# 等他运行结束以后，会生成一个book.sql的文件
+# 接下来的问题就是通过scp从服务器上把这个文件弄到你想要的地方了
+# 简单
+
+md5sum books.sql
+# 这条命令会生成一个hash值，保存一下
+
+cat books.sql | split -b 512M - sql.books.
+# 在服务器上运行上面这个命令会把原来的books.sql 分隔成若干个以sql.books.开头的文件
+
+# 下面这条命令，在本地电脑上运行
+scp root@服务器IP:/path/to/books.sql/sql.books.* ./
+# 把服务器上所有分割好的文件下载到本地
+
+cat sql.books.* &gt; books.sql
+# 把所有已经下载好的、分割好的文件，再次合成同一个文件
+md5sum books.sql
+# 在本地生成的hash值和服务器上生成的hash值对比一下，如果完全一样，备份结束
+
+</code></pre>
+<h2 id="-">数据恢复 （恢复到本地）</h2>
+<pre><code class="lang-python">mysql -u root -p
+# 登录本地的mysql数据库
+create database books;
+# 创建一个名为books的数据库
+exit;
+# 退出数据库
+
+# 下面真的在本地开始恢复数据库
+mysql -h localhost -u root -p 本地数据库的名字 &lt; .sql文件的路径
+
+mysql -h localhost -u root -p books&lt; ./books.sql
+
+</code></pre>
+<h2 id="-">创建权限适当，并允许远程登录的账户</h2>
+<pre><code class="lang-python"># 登录mysql
+mysql -u root -p
+mysql 正确的使用方式（永远，永远不要让root可以远程登录）
+# 这个命令会让你创建一个能在本地登录的alex1943_read_books的帐号，密码为qwe123，并且允许远程登录
+CREATE USER &#39;alex1943_read_books&#39;@&#39;%&#39; IDENTIFIED BY &#39;qwe123&#39;;
+# 把这个数据库的所有权限赋予给这个alex1943_read_books这个账户
+GRANT ALL PRIVILEGES ON books.* TO &#39;alex1943_read_books&#39;@&#39;%&#39;;
+# 这条命令会让alex1943_read_books这个账户会有和root一样的权限
+GRANT ALL PRIVILEGES ON *.* TO &#39;alex1943_read_books&#39;@&#39;%&#39;;
+# 这条是正确的打开方式
+GRANT select ON books.* TO &#39;alex1943_read_books&#39;@&#39;%&#39;;
+#刷新权限
+FLUSH PRIVILEGES;
+
+# 测试远程登录，如果不成功，请检查centos的防火墙，以及3306端口
+
+systemctl stop firewalld.service             #停止firewall
+
+systemctl start firewalld.service             #开启firewall
+systemctl disable firewalld.service        #禁止firewall开机启动
+
+firewall-cmd --state                           ##查看防火墙状态，是否是running
+
+
+
+#开启  :
+systemctl start firewalld.service
+
+
+#打开3306端口
+firewall-cmd --zone=public --add-port=3306/tcp --permanent
+&quot;&quot;&quot;
+多一句嘴，如果以后你要修改默认端口，直接在/etc/my.cnf添加一行
+port=3308
+然后重启mysql
+systemctl restart mysqld
+最后也是要在防火墙这边放行的
+firewall-cmd --zone=public --add-port=3308/tcp --permanent
+&quot;&quot;&quot;
+</code></pre>
+<h1 id="day002-vue-flask-">day002 VUE创建、FLASK创建</h1>
+<h2 id="day002-1">day002。1</h2>
+<h2 id="day002-2">day002。2</h2>
+
+          	</article>
+        </div>
+		</div>
+  </body>
+</html>
+<script type="text/javascript" src="toc/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="toc/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="toc/js/ztree_toc.js"></script>
+<script type="text/javascript" src="toc_conf.js"></script>
+
+<SCRIPT type="text/javascript" >
+<!--
+$(document).ready(function(){
+    var css_conf = eval(markdown_panel_style);
+    $('#readme').css(css_conf)
+    
+    var conf = eval(jquery_ztree_toc_opts);
+		$('#tree').ztree_toc(conf);
+});
+//-->
+</SCRIPT>
