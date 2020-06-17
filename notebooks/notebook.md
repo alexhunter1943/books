@@ -2,6 +2,7 @@
 小说站：前端vue3.0+后端flask+数据库mysql
 
 ## 起源
+
 ## 项目构思 前后端分离
 - 前端： react、vue、jquery+ajax： vue3.0
 - 后端： flask、 fastAPI ： flask
@@ -78,7 +79,32 @@ huawei matebook 14 16G （）
 
 # day001 数据库的安装、迁移、权限分配，磁盘挂载，大文件的上传
 
-## mysql的安装(centOS)
+## .md文件生成html（前提需要安装node，后面再说）
+- npm install -g i5ting_toc
+- i5ting_toc -f yourfile.md
+
+## 服务器购买
+
+- 阿里云、腾讯云、华为云： 公司用户、学生用户（比较便宜）
+- jidcy.com  ： 虎背狼腰
+
+## 获取数据的方式
+- wget book.alexhunter1943.com/static/imgs/books.zip  （可以直接在服务器上操作）
+- 百度网盘：链接: https://pan.baidu.com/s/1qAvSQ_nIDCtHOw74ysSDEQ 提取码: y1ki （我没测试）
+- 压缩命令： zip -q -r 你想压缩的文件
+- 解压命令： unzip 你想解压的文件
+- md5值： 6f7fbadd48a4b1fa6ecda76cd1d5a625 （这个是.sql结尾的md5值）
+- 安装解压工具（在centos上）： yum install unzip
+
+## 登录服务器
+
+ssh --help
+
+- ssh username@IP
+- ssh username@IP -P port
+
+
+## mysql的安装(centOS7)
 ```python
 # 下载rpm包
 wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
@@ -273,9 +299,18 @@ firewall-cmd --zone=public --add-port=3308/tcp --permanent
 """
 ```
 
-# day002 VUE创建、FLASK创建
+# day002 python3 FLASK创建、虚拟环境virtualenv、pymysql
 
 
-## day002。1
+## python2 VS python3
 
-## day002。2
+## virtualenv
+
+## flask
+
+## pymysql
+
+## 关于vue的三点你必须知道事情：
+- vue是基于javascript的。（潜台词：天生异步）
+- vue是数据驱动的。
+- vue为什么需要生命周期？

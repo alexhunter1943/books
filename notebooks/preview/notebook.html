@@ -78,6 +78,12 @@
 <li>创建github账户</li>
 <li>创建github代码仓库</li>
 <li>电脑安装git： apt-get install git 或者sudo apt-get install git</li>
+<li>git clone &#39;url&#39;</li>
+<li>git status (ls -a 能看到.git文件夹)</li>
+<li>git add .</li>
+<li>git commit -m &#39;添加你需要的注释&#39;</li>
+<li>git pull</li>
+<li>git push (填写你的账户和密码)</li>
 </ul>
 <h3 id="-vue3-0-">前端vue3.0 优点</h3>
 <ul>
@@ -119,14 +125,39 @@
 <p>都只是工具而已，哪个方便就用哪个</p>
 <h3 id="-ubuntu-macos">推荐系统： ubuntu、MacOS</h3>
 <p>huawei matebook 14 16G （）</p>
-<h3 id="-pycharm-sublime-text-atom-vs-code">推荐编辑器： pycharm、 sublime text、 atom、 vs code</h3>
+<h3 id="-pycharm-sublime-text-atom-vs-code-vim-vi">推荐编辑器： pycharm、 sublime text、 atom、 vs code、 vim或者vi</h3>
 <p>个人习惯：</p>
 <ul>
 <li>atom或者pycharm写python</li>
-<li>vs code 写vue</li>
+<li>vs code 写其他</li>
 </ul>
 <h1 id="day001-">day001 数据库的安装、迁移、权限分配，磁盘挂载，大文件的上传</h1>
-<h2 id="mysql-centos-">mysql的安装(centOS)</h2>
+<h2 id="-md-html-node-">.md文件生成html（前提需要安装node，后面再说）</h2>
+<ul>
+<li>npm install -g i5ting_toc</li>
+<li>i5ting_toc -f yourfile.md</li>
+</ul>
+<h2 id="-">服务器购买</h2>
+<ul>
+<li>阿里云、腾讯云、华为云： 公司用户、学生用户（比较便宜）</li>
+<li>jidcy.com  ： 虎背狼腰</li>
+</ul>
+<h2 id="-">获取数据的方式</h2>
+<ul>
+<li>wget book.alexhunter1943.com/static/imgs/books.zip  （可以直接在服务器上操作）</li>
+<li>百度网盘：链接: <a href="https://pan.baidu.com/s/1qAvSQ_nIDCtHOw74ysSDEQ">https://pan.baidu.com/s/1qAvSQ_nIDCtHOw74ysSDEQ</a> 提取码: y1ki （我没测试）</li>
+<li>压缩命令： zip -q -r 你想压缩的文件</li>
+<li>解压命令： unzip 你想解压的文件</li>
+<li>md5值： 6f7fbadd48a4b1fa6ecda76cd1d5a625 （这个是.sql结尾的md5值）</li>
+<li>安装解压工具（在centos上）： yum install unzip </li>
+</ul>
+<h2 id="-">登录服务器</h2>
+<p>ssh --help</p>
+<ul>
+<li>ssh username@IP</li>
+<li>ssh username@IP -P port</li>
+</ul>
+<h2 id="mysql-centos7-">mysql的安装(centOS7)</h2>
 <pre><code class="lang-python"># 下载rpm包
 wget https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
 # 对repo进行安装
@@ -304,9 +335,16 @@ systemctl restart mysqld
 firewall-cmd --zone=public --add-port=3308/tcp --permanent
 &quot;&quot;&quot;
 </code></pre>
-<h1 id="day002-vue-flask-">day002 VUE创建、FLASK创建</h1>
+<h1 id="day002-python3-flask-virtualenv-pymysql">day002 python3 FLASK创建、虚拟环境virtualenv、pymysql</h1>
 <h2 id="day002-1">day002。1</h2>
 <h2 id="day002-2">day002。2</h2>
+<h1 id="day003-vue-">day003 VUE工程创建</h1>
+<h2 id="-vue-">关于vue的三点你必须知道事情：</h2>
+<ul>
+<li>vue是基于javascript的。（潜台词：天生异步）</li>
+<li>vue是数据驱动的。</li>
+<li>vue为什么需要生命周期？</li>
+</ul>
 
           	</article>
         </div>
