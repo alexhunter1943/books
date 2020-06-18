@@ -314,14 +314,18 @@ firewall-cmd --zone=public --add-port=3308/tcp --permanent
 
 - 为什么需要virtualenv
 - 怎么安装virtualenv： pip3 install virtualenv
-- 怎么使用virtualenv: virtualenv -p python3 yourEnvName; source /yourEnvName/bin/activate; deactive
+- 怎么使用virtualenv:
+-- 创建虚拟环境：virtualenv -p python3 yourEnvName
+-- 进入虚拟环境： source /yourEnvName/bin/activate
+-- 推出虚拟环境： deactive
 
 ## 命名规则（PEP8）
 
 - 大写字母开头的：一般是类
 - 小写字母开头的：一般是方法或者变量或者库、模块
 - 方法尽量用蛇型命名法： get_books_infos()
-- 不允许双下划线或者单下划线开头的命名：双下划线（python自己留着用的），单下划线（一个类内部的成员变量或者方法）
+- 不允许双下划线的命名：双下划线（python自己留着用的）
+- 单下划线（一个类内部的成员变量或者方法）
 
 ## 你如何使用git上拉下来的python项目
 

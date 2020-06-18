@@ -337,6 +337,7 @@ firewall-cmd --zone=public --add-port=3308/tcp --permanent
 
 </code></pre>
 <h1 id="3-day002_python3_pip3_virtualenv_flask-_pymysql">3 day002_python3_pip3_virtualenv_flask创建_pymysql</h1>
+<p> 万物一类</p>
 <h2 id="python2-vs-python3">python2 VS python3</h2>
 <ul>
 <li>安装python3</li>
@@ -347,6 +348,19 @@ firewall-cmd --zone=public --add-port=3308/tcp --permanent
 <li>为什么需要virtualenv</li>
 <li>怎么安装virtualenv： pip3 install virtualenv</li>
 <li>怎么使用virtualenv: virtualenv -p python3 yourEnvName; source /yourEnvName/bin/activate; deactive</li>
+</ul>
+<h2 id="-pep8-">命名规则（PEP8）</h2>
+<ul>
+<li>大写字母开头的：一般是类</li>
+<li>小写字母开头的：一般是方法或者变量或者库、模块</li>
+<li>方法尽量用蛇型命名法： get_books_infos()</li>
+<li>不允许双下划线或者单下划线开头的命名：双下划线（python自己留着用的），单下划线（一个类内部的成员变量或者方法）</li>
+</ul>
+<h2 id="-git-python-">你如何使用git上拉下来的python项目</h2>
+<ul>
+<li>在你自己的电脑上创建一个虚拟环境</li>
+<li>进入你自己的虚拟环境</li>
+<li>pip install -r requirements.txt</li>
 </ul>
 <h2 id="flask">flask</h2>
 <ul>
