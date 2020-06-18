@@ -297,20 +297,237 @@ systemctl restart mysqld
 最后也是要在防火墙这边放行的
 firewall-cmd --zone=public --add-port=3308/tcp --permanent
 """
+
 ```
 
-# day002 python3 FLASK创建、虚拟环境virtualenv、pymysql
 
+# 3 day002_python3_pip3_virtualenv_flask创建_pymysql
+
+ 万物一类
 
 ## python2 VS python3
 
+- 安装python3
+- 安装pip3 ： apt-get install python3-pip
+
 ## virtualenv
+
+- 为什么需要virtualenv
+- 怎么安装virtualenv： pip3 install virtualenv
+- 怎么使用virtualenv: virtualenv -p python3 yourEnvName; source /yourEnvName/bin/activate; deactive
+
+## 命名规则（PEP8）
+
+- 大写字母开头的：一般是类
+- 小写字母开头的：一般是方法或者变量或者库、模块
+- 方法尽量用蛇型命名法： get_books_infos()
+- 不允许双下划线或者单下划线开头的命名：双下划线（python自己留着用的），单下划线（一个类内部的成员变量或者方法）
+
+## 你如何使用git上拉下来的python项目
+
+- 在你自己的电脑上创建一个虚拟环境
+- 进入你自己的虚拟环境
+- pip install -r requirements.txt
 
 ## flask
 
+- 安装在虚拟环境中
+
+最简单的falsk
+```python
+from flask import Flask
+
+
+# 创建flask的应用对象
+app = Flask(__name__)
+# __name__:表示当前模块名字
+# 模块名作用：flask以这个模块所在的目录为总目录
+# 默认这个目录中的static为静态文件目录
+# 默认这个目录中的templates为模板文件目录
+
+'''
+__name__的具体名字：
+如果作为启动模块（就是你直接运行当前磨矿）：__name__ =__main__:(python定死的)
+如果你从别的地方导入一个模块，而导入的模块中也使用__name__,那么导入模块中的__name__=模块的名字（文件名）
+结合 if __name__ == '__main__':来理解，这也就是为什么这个==可以作为入口函数的原因
+app = Flask(
+    __name__,
+    static_url_path="/python",  # 修改静态资源url前缀，默认为/static
+    static_folder="static",  # 修改静态文件目录，默认就是static
+    template_folder="templates"  # 模板文件目录，默认是templates
+)
+'''
+
+@app.route("/")
+def index():
+    """定义视图函数"""
+    return "Hello Flask"
+
+if __name__ == '__main__':
+    # 启动flask程序
+    app.run()
+    # app.run(host='', port=5555, DEBUG=True)
+    # 绑定端口和IP，设定模式为DEBUG模式（代码有更新，直接刷新就好了）
+# 在终端输入：python 你为这个文件命名的.py文件
+```
+
 ## pymysql
+
+- 安装在虚拟环境中
+
+
+# day003_VUE
 
 ## 关于vue的三点你必须知道事情：
 - vue是基于javascript的。（潜台词：天生异步）
 - vue是数据驱动的。
 - vue为什么需要生命周期？
+
+## node的安装
+
+```python
+sudo apt-get install npm
+sudo npm -g install npm
+# -g 全局安装
+# pip3 install --upgrade pip
+# 还记得上面这个命令吗？
+# 这个命令的作用和pip3这个命令类似，自己更新自己
+npm -v
+# 如果能获得版本信息，那么恭喜你安装对了
+sudo npm install npm -g
+# npm 更新自己
+# 把npm的更新源换成淘宝的
+sudo npm install -g cnpm --registry=https://registry.npm.taobao.org
+# 从此以后cnpm和npm等价
+```
+- 安装vue-cli
+
+```python
+sudo npm install -g @vue/cli
+# 先安装npm哈
+vue --version
+# 如果可以正确输出版本信息，那么恭喜你
+vue --help
+# 建议你先仔细看一下这些内容，不难的
+```
+
+## vue的安装、项目创建
+
+```python
+vue create ProjectName
+'''
+第一步：
+用空格选中，回车确认，进入下一步
+'''
+? Please pick a preset: (Use arrow keys)
+❯ default (babel, eslint)  # 采用默认设置
+  Manually select features  #采用自定义设置
+# 当然选择自定义设置啦
+
+'''
+第二步：
+'''
+
+? Check the features needed for your project:
+# 为你的项目选择属性
+(Press <space> to select, <a>
+to toggle all, <i> to invert selection)
+# 按空格选中或者不选中
+# 按回车确认进入下一步
+❯◉ Babel  # 编译 es6 to es5 必选
+ ◯ TypeScript  # js超集
+ ◯ Progressive Web App (PWA) Support # 渐进式的web运用
+ ◯ Router  # vue路由，必选
+ ◯ Vuex  # vue状态管理， 必选
+ ◯ CSS Pre-processors  # css编译器， 必选
+ ◉ Linter / Formatter  # 代码检测和格式化， 必选
+ ◯ Unit Testing  # 单元测试
+ ◯ E2E Testing  # 端对端测试，属于黑盒测试
+
+'''
+第三步：
+Use history mode for router？
+路由是否采用histroy模式？
+路由模式有两个： hash、 history
+hash： 即url中带有#符号 如http://www.abc.com/#/hello/
+history： 利用了HTML5 History Interface中新增的pushState()和replaceState()两个方法，可以去掉这个#，但是需要在nginx和Apache中进行简单配置
+
+选n，偷懒
+'''
+Vue CLI v4.3.1
+? Please pick a preset: Manually select features
+? Check the features needed for your project: Babel, Router, Vuex, CSS Pre-p
+rocessors, Linter
+? Use history mode for router? (Requires proper server setup for index fallb
+ack in production) (Y/n)
+
+
+'''
+第四步：选择css编译器
+选node-sass编辑器
+'''
+? Pick a CSS pre-processor (PostCSS, Autoprefixer and CSS Modules are suppor
+ted by default): (Use arrow keys)
+❯ Sass/SCSS (with dart-sass)
+  Sass/SCSS (with node-sass)
+  Less
+  Stylus
+
+'''
+第五步： 选择代码规范
+选择最后一个： ESLint + Prettier
+'''
+? Pick a linter / formatter config: (Use arrow keys)
+❯ ESLint with error prevention only
+  ESLint + Airbnb config
+  ESLint + Standard config
+  ESLint + Prettier
+
+'''
+第六步： 选择何时进行代码检测
+选择： Lint on save
+'''
+
+? Pick additional lint features: (Press <space> to select, <a> to toggle all
+, <i> to invert selection)
+❯◉ Lint on save   # 保存时检测
+ ◯ Lint and fix on commit  # 提交时检测
+
+
+'''
+第七步： 你要把你刚才选择的配置文件保存在什么位置？
+选择： In dedicated config files
+'''
+
+? Where do you prefer placing config for Babel, ESLint, etc.? (Use arrow key
+s)
+❯ In dedicated config files  # 保存在各自的配置文件中
+  In package.json  # 保存在package.json中
+
+'''
+第八步： 是否把你当前的配置文件设置成一个随时可以选择的配置文件
+
+选择： n （多来几次，你就记得住了）
+'''
+
+? Save this as a preset for future projects? (y/N)
+
+```
+
+
+## 对当前vue项目的文件做一些调整
+
+- Vue3.0新特性语法
+
+```python
+
+# 安装依赖
+sudo npm install @vue/composition-api --save
+# 在 ./src/main.js 中添加如下
+import VueCompositionApi from '@vue/composition-api';  # 去找这个文件的时候注意文件夹的名字叫“@vue”
+
+Vue.use(VueCompositionApi);
+```
+- vue axios 安装
+
+- vue bootstrapvue 安装
