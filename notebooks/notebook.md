@@ -119,7 +119,7 @@ systemctl start mysqld
 # 查看是否启动
 ps aux | grep mysql
 # 查看生成临时密码
-grep ‘temporary password‘ /var/log/mysqld.log
+grep 'temporary password' /var/log/mysqld.log
 # 进入mysql
 mysql -uroot -p  # 然后回车，输入上面提供的临时密码
 # 设置新的密码
@@ -324,7 +324,7 @@ firewall-cmd --zone=public --add-port=3308/tcp --permanent
 - 大写字母开头的：一般是类
 - 小写字母开头的：一般是方法或者变量或者库、模块
 - 方法尽量用蛇型命名法： get_books_infos()
-- 不允许双下划线的命名：双下划线（python自己留着用的）
+- 不允许双下划线开头和结尾的命名：双下划线开头和结尾（python自己留着用的）
 - 单下划线（一个类内部的成员变量或者方法）
 
 ## 你如何使用git上拉下来的python项目
@@ -380,7 +380,22 @@ if __name__ == '__main__':
 - 安装在虚拟环境中
 
 
-# day003_VUE
+# day003_VUE：node+vue+axios+bootstrapvue
+
+## 一个口误、一个错误
+
+- 单下划线
+- .gitignore
+
+## 一个简单的问题：一个网站能浏览需要哪些东西？
+
+- html
+- js
+- css
+- 后端服务器
+- 或许还有数据库
+- 浏览器
+
 
 ## 关于vue的三点你必须知道事情：
 - vue是基于javascript的。（潜台词：天生异步）
