@@ -31,5 +31,15 @@ class Book(object):
         for temp in self.cursor.fetchall():
             print(temp)
             data.append(temp)
+        return data
 
+    def get_cates_newst_books_30(self, book_cate):
+        sql = "select id, book_name,book_id,book_last_update_time, \
+        book_newest_name,book_newest_url from book_infos \
+        where book_cate='{}' order by book_last_update_time desc limit 30;".format(book_cate)
+        self.cursor.execute(sql)
+        data = []
+        for temp in self.cursor.fetchall():
+            print(temp)
+            data.append(temp)
         return data

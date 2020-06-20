@@ -1,5 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from books import Book
+import json
+from settings import BOOK_LIST
 
 """
 接口说明：
@@ -39,6 +41,54 @@ def get_books_cates():
         "message": '对本次请求的说明'
     }
     return jsonify(resData)
+
+# post man
+@app.route('/<string:book_cate>', methods=['POST'])
+def get_cates_infos(book_cate):
+    if request.method == 'POST':
+        print("捕获到了post请求 book_cate", book_cate)
+        get_data = json.loads(request.get_data(as_text=True))
+        key = get_data['key']
+        print("key = ", key)
+        secretKey = get_data['secretKey']
+        if book_cate in BOOK_LIST:
+            print(key, " is in BOOK_LIST")
+            print(key, secretKey)
+            if key == 'newest':
+                # select * from book_infos where book_cate='xiuzhen' order by book_last_update_time desc limit 3
+                print("newest")
+                book = Book()
+                sql_data = book.get_cates_newst_books_30(book_cate)
+                resData = {
+                    "resCode": 0, # 非0即错误 1
+                    "data": sql_data,# 数据位置，一般为数组
+                    "message": '最新的30本图书信息查询结果'
+                }
+                return jsonify(resData)
+            elif key == 'most':
+                print("most")
+                pass
+            else:
+                resData = {
+                    "resCode": 2, # 非0即错误 1
+                    "data": [],# 数据位置，一般为数组
+                    "message": '参数有误'
+                }
+                return jsonify(resData)
+        else:
+            print("key is not BOOK_LIST")
+            return 404
+    else:
+        resData = {
+            "resCode": 1, # 非0即错误 1
+            "data": [],# 数据位置，一般为数组
+            "message": '请求方法错误'
+        }
+        return jsonify(resData)
+
+
+
+
 
 
 @app.route('/', methods=['GET', 'POST']) # 路由
