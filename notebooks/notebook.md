@@ -549,4 +549,48 @@ Vue.use(VueCompositionApi);
 ```
 - vue axios 安装
 
+```js
+npm install axios
+
+```
+
 - vue bootstrapvue 安装
+
+```js
+npm install bootstrap-vue
+
+import Vue from 'vue'
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
+```
+
+# day004 网站分类页面、图书首页、图书详情页面
+
+## 遗漏的问题： 跨域
+- 请求地址：http://localhost:8081/api/books_cates
+- 替换“^/api”之前的所有数据“/books_cates”
+- 最终的url： http://127.0.0.1:1943/books_cates
+
+## 一个页面的诞生过程
+
+- 确定访问的路由
+- 让无数据的页面能展示
+- 确认请求的接口和数据，并确认能发送正确的请求
+- 在flask完善接口，并确认能正确返回结果
+- 查看数据是否正确显示
+
+## 两张图片的url
+
+- https://i.loli.net/2020/06/11/MLPaI12eFsyRXck.jpg
+- https://i.loli.net/2020/06/11/sDlvEWaeSxzpYgb.jpg
+
+
+# day005 寂静无声的一天
+
+
+# day006
