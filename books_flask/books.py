@@ -29,7 +29,7 @@ class Book(object):
         self.cursor.execute(sql)
         data = []
         for temp in self.cursor.fetchall():
-            print(temp)
+            # print(temp)
             data.append(temp)
         return data
 
@@ -40,6 +40,24 @@ class Book(object):
         self.cursor.execute(sql)
         data = []
         for temp in self.cursor.fetchall():
-            print(temp)
+            # print(temp)
+            data.append(temp)
+        return data
+
+    def get_cates_most_books_30(self, book_cate):
+        sql = "select id,book_id,book_name,book_author,book_newest_url from book_infos where book_cate='{}' order by book_newest_url desc limit 35;".format(book_cate)
+        self.cursor.execute(sql)
+        data = []
+        for temp in self.cursor.fetchall():
+            # print(temp)
+            data.append(temp)
+        return data
+
+    def get_book_infos_by_book_id(self,book_id):
+        sql = "select * from book_infos where book_id ='{}'".format(book_id)
+        self.cursor.execute(sql)
+        data = []
+        for temp in self.cursor.fetchall():
+            # print(temp)
             data.append(temp)
         return data

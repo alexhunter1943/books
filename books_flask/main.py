@@ -36,7 +36,7 @@ def get_books_cates():
             {"id":6, "text": '科幻', "url":'/kehuan'},
             {"id":7, "text": '言情', "url":'/yanqing'},
             {"id":8, "text": '其他', "url":'/qita'},
-            {"id":9, "text": '完本', "url":'/wanben'},
+            {"id":9, "text": '完本', "url":'/quanben'},
         ],# 数据位置，一般为数组
         "message": '对本次请求的说明'
     }
@@ -67,7 +67,16 @@ def get_cates_infos(book_cate):
                 return jsonify(resData)
             elif key == 'most':
                 print("most")
-                pass
+                book = Book()
+                sql_data = book.get_cates_most_books_30(book_cate)
+                resData = {
+                    "resCode": 0, # 非0即错误 1
+                    "data": sql_data,# 数据位置，一般为数组
+                    "message": '最新的30本图书信息查询结果'
+                }
+                return jsonify(resData)
+
+
             else:
                 resData = {
                     "resCode": 2, # 非0即错误 1
@@ -87,7 +96,41 @@ def get_cates_infos(book_cate):
         return jsonify(resData)
 
 
-
+# 图书首页信息
+@app.route('/book/<int:book_id>', methods=['POST'])
+def get_book_infos_by_id(book_id):
+    if request.method == 'POST':
+        get_data = json.loads(request.get_data(as_text=True))
+        key = get_data['key']
+        secretKey = get_data['secretKey']
+        if key == 'index':
+            book = Book()
+            sql_data = book.get_book_infos_by_book_id(book_id)
+            resData = {
+                "resCode": 0, # 非0即错误 1
+                "data": sql_data,# 数据位置，一般为数组
+                "message": '图书的信息'
+            }
+            return jsonify(resData)
+        elif key == "cap20":
+            pass
+        elif key == "all":
+            pass
+        else:
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '参数错误'
+            }
+            return jsonify(resData)
+        # book_infos
+    else:
+        resData = {
+            "resCode": 1, # 非0即错误 1
+            "data": [],# 数据位置，一般为数组
+            "message": '请求方法错误'
+        }
+        return jsonify(resData)
 
 
 

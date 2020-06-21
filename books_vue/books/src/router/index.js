@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import HomeCate from "../views/HomeCate.vue"
+import BookIndex from "../views/BookIndex.vue"
 
 Vue.use(VueRouter);
 
@@ -20,7 +21,11 @@ const routes = [
   },
 
   // 图书首页
-
+  {
+    path: "/book/:book_id",
+    name: "BookIndex",
+    component: BookIndex,
+  },
 
   // 图书详情页
 

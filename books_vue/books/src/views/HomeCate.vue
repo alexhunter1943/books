@@ -20,12 +20,27 @@
                             
                         </tbody><!---->
                     </table>
-                    {{ items.newestItems }}
             </b-col>
             <b-col cols="12" md="1">
             </b-col>
             <b-col cols="12" md="4">
                     <h6>最多阅读的小说</h6>
+                    <table role="table" aria-busy="false" aria-colcount="3" class="table b-table table-striped table-hover" ><!----><!---->
+                        <thead role="rowgroup" class=""><!---->
+                        <tr role="row" class="">
+                            <th role="columnheader" scope="col" aria-colindex="1" class=""><div>小说</div></th>
+                            <th role="columnheader" scope="col" aria-colindex="2" class=""><div>作者</div></th>
+                            </tr>
+                        </thead>
+                        <tbody role="rowgroup"><!---->
+                            <tr role="row" v-for="item in items.mostItems" :key="item.id">
+                            <td aria-colindex="1" role="cell" class=""><a :href="'/book/'+ item.book_id">{{ item.book_name }}</a></td>
+                            <td aria-colindex="2" role="cell" class=""><a :href="'/book/'+ item.book_id + '/'+ item.book_newest_url">{{ item.book_author }}</a></td>
+                            
+                            </tr>
+                            
+                        </tbody><!---->
+                    </table>
             </b-col>
         </b-row>
     </b-container>
@@ -55,19 +70,28 @@ export default {
             key: 'newest'
         });
 
-        const items = reactive({
-            newestItems:[]
-        })
 
         const mostParams = reactive({
             url: now_url.value,
             key: 'most'
         });
 
+        const items = reactive({
+            newestItems:[],
+            mostItems:[]
+        });
+
         GetInfoPost(newstParams).then(resp => {
-            console.log("resp.data.data", resp.data.data);
+            // console.log("resp.data.data", resp.data.data);
             items.newestItems = resp.data.data
         });
+
+        GetInfoPost(mostParams).then(resp => {
+            console.log("most : resp.data.data", resp.data.data);
+            items.mostItems = resp.data.data
+        });
+
+
 
         onMounted(()=>{
             console.log("In HomeCate now_url = ", now_url);

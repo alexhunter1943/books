@@ -7,7 +7,7 @@
 
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item v-for="item in headData.headers" :key="item.id" :href="item.url">{{ item.text }}</b-nav-item>
+            <b-nav-item v-for="item in headData.headers" :key="item.id" :href="item.url" :class="item.url == now_url ? 'active':''">{{ item.text }}</b-nav-item>
             
           </b-navbar-nav>
 
@@ -31,6 +31,7 @@ import { reactive, ref } from "@vue/composition-api";  // ref 定义常量; reac
 export default {
     name:"Header",
     setup(props, context){ // setup相当与beforecreate、created; props：来自爸爸的爱（父组件传入的内容）;context：当前组件拥有的内容
+      const now_url = ref(context.root.$route.path);
 
       const headData = reactive({
         headers:[]
@@ -42,7 +43,8 @@ export default {
       });
 
       return {
-        headData
+        headData,
+        now_url
       }
 
     }
