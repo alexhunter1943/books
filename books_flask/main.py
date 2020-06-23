@@ -190,6 +190,56 @@ def get_book_infos_by_id(book_id):
         }
         return jsonify(resData)
 
+# 获取图书详情页接口
+@app.route('/book/<int:book_id>/<int:sort_id>', methods=['POST'])
+def get_book_detail_infos(book_id, sort_id):
+    if request.method == 'POST':
+        book = Book()
+        sql_book_id_data = book.get_book_infos_by_book_id(book_id)
+        if len(sql_book_id_data) == 0:
+            # 不存在该图书
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '不存在该图书信息'
+            }
+            return jsonify(resData)
+        # 该图书存在
+        # print("sql_book_id_data[0]['book_name'] = ", sql_book_id_data[0]['book_name'])
+        sql_detail_data = book.get_book_detail_by_book_id_sort_id(book_id, sort_id)
+
+        next_data = book.get_next_cap_id(book_id, sort_id)
+        print("in flask :next_data = ", next_data)
+        if next_data == None:
+            print("next_data == None")
+            sql_detail_data[0]['next_sort_id'] = ''
+        else:
+            print("next_data != None")
+            sql_detail_data[0]['next_sort_id'] = next_data['sort_id']
+
+        before_data = book.get_before_cap_id(book_id, sort_id)
+        if before_data == None:
+            sql_detail_data[0]['before_sort_id'] = ''
+        else:
+            sql_detail_data[0]['before_sort_id'] = before_data['sort_id']
+
+
+        sql_detail_data[0]['book_name'] = sql_book_id_data[0]['book_name']
+
+
+        resData = {
+            "resCode": 0, # 非0即错误 1
+            "data": sql_detail_data,# 数据位置，一般为数组
+            "message": '所有图书信息'
+        }
+        return jsonify(resData)
+    else:
+        resData = {
+            "resCode": 1, # 非0即错误 1
+            "data": [],# 数据位置，一般为数组
+            "message": '请求方法错误'
+        }
+        return jsonify(resData)
 
 
 @app.route('/', methods=['GET', 'POST']) # 路由
