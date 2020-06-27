@@ -6,6 +6,7 @@ import VueCompositionApi from "@vue/composition-api";
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import './styles/main.scss';
 
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);

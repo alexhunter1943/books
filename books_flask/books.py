@@ -89,6 +89,15 @@ class Book(object):
             data.append(temp)
         return data
 
+    def search_infos_by_key(self, key):
+        sql = "select * from book_infos where book_name='{}' or book_author='{}'".format(key, key)
+        self.cursor.execute(sql)
+        data = []
+        for temp in self.cursor.fetchall():
+            # print("get_book_infos_by_book_id = ", temp)
+            data.append(temp)
+        return data
+
     # 查询下一章的sql： select * from book_details where book_id=45563 and sort_id>328922 order by sort_id  limit 1
     def get_next_cap_id(self, book_id, sort_id):
         sql = "select sort_id from book_details where book_id='{}' and sort_id>'{}' order by sort_id  limit 1".format(book_id, sort_id)

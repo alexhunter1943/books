@@ -1,14 +1,14 @@
 <template>
 <div id="HomeCate">
     <Header />
-    <b-container>
+    <b-container class="mt-4 mb-2">
         <div v-if="items.newestItems.length == 0">
-            您要查询的页面不存在哦
+            您要查询的分类页面不存在哦
         </div>
         <div v-else>
             <b-row>
                 <b-col cols="12" md="7">
-                        <h6>最新更新的小说</h6>
+                        <h4>最新更新的小说</h4>
                         <table role="table" aria-busy="false" aria-colcount="3" class="table b-table table-striped table-hover" ><!----><!---->
                             <thead role="rowgroup" class=""><!---->
                             <tr role="row" class="">
@@ -28,7 +28,7 @@
                 <b-col cols="12" md="1">
                 </b-col>
                 <b-col cols="12" md="4">
-                        <h6>最多阅读的小说</h6>
+                        <h4>最多阅读的小说</h4>
                         <table role="table" aria-busy="false" aria-colcount="3" class="table b-table table-striped table-hover" ><!----><!---->
                             <thead role="rowgroup" class=""><!---->
                             <tr role="row" class="">

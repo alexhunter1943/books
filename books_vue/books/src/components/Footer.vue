@@ -1,7 +1,8 @@
 <template>
     <b-container>
-      <div style="height:50px;background-color:blue">
-        footer部分
+      <hr>
+      <div class="normal-center" style="height:50px">
+        由alexhunter提供技术支持
         </div>
       </b-container>
 </template>

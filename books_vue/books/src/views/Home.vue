@@ -25,6 +25,12 @@ export default {
   components: {
     Header,
     Footer
+  },
+  setup(props, context){
+    document.title = '风华绝代的alexhunter';
+    document.querySelector('meta[name="keywords"]').setAttribute("content", "风华绝代的keywords");
+    document.querySelector('meta[name="description"]').setAttribute("content", "风华绝代的description");
   }
+
 };
 </script>

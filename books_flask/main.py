@@ -241,6 +241,44 @@ def get_book_detail_infos(book_id, sort_id):
         }
         return jsonify(resData)
 
+# 搜索接口
+@app.route('/search', methods=['POST'])
+def search_infos():
+    if request.method == 'POST':
+        get_data = json.loads(request.get_data(as_text=True))
+        key = get_data['key']
+        secretKey = get_data['secretKey']
+        if is_string_validate(key):
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '参数错误'
+            }
+            return jsonify(resData)
+        book = Book()
+        search_data = book.search_infos_by_key(key)
+        if len(search_data) == 0:
+            resData = {
+                "resCode": 0, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '数据为空'
+            }
+            return jsonify(resData)
+
+        resData = {
+            "resCode": 0, # 非0即错误 1
+            "data": search_data,# 数据位置，一般为数组
+            "message": '搜索结果'
+        }
+        return jsonify(resData)
+    else:
+        resData = {
+            "resCode": 1, # 非0即错误 1
+            "data": [],# 数据位置，一般为数组
+            "message": '请求方法错误'
+        }
+        return jsonify(resData)
+
 
 @app.route('/', methods=['GET', 'POST']) # 路由
 def hello_world():

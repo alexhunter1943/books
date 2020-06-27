@@ -66,12 +66,12 @@ module.exports = {
     loaderOptions: {
       sass: {
         // data: '@import "./src/styles/main.scss";'  // 3.0 用这个
-        prependData: `@import "./src/styles/main.scss";` // 4.0 用这个
+        prependData: '@import "./src/styles/main.scss";'  // 4.0 用这个
         // 当前是没有这个路径，也没有这个文件的，不要奇怪
         // 我们去创建它
       },
       scss: {
-        prependData: `@import "./src/styles/main.scss";`
+        prependData: '@import "./src/styles/main.scss";' 
       }
     }
   },
