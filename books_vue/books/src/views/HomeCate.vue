@@ -99,8 +99,20 @@ export default {
 
 
         onMounted(()=>{
-            console.log("In HomeCate now_url = ", now_url);
-            console.log("In HomeCate now_url.value = ", now_url.value)
+            console.log("in hhhhhhhhhhcccccccccccccc= ", context.root.$route.path.replace(/\//g,''))
+            const titlePramas = reactive({
+                url: '/title',
+                key: context.root.$route.path.replace(/\//g,'')
+            });
+
+
+
+            GetInfoPost(titlePramas).then(resp => {
+                console.log("In Home title = ", resp.data.data);
+                document.title = resp.data.data[0];
+                document.querySelector('meta[name="keywords"]').setAttribute("content", resp.data.data[1]);
+                document.querySelector('meta[name="description"]').setAttribute("content", resp.data.data[2]);
+            });
         });
 
         return {

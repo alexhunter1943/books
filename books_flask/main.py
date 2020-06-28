@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, request
 from books import Book
 import json
-from settings import BOOK_LIST
+from settings import BOOK_LIST, RSA_1024_PRIV_KEY, REQUSET_LISTS, TITLES
 import re
+import rsa
+import base64
+import time
 
 """
 接口说明：
@@ -31,6 +34,22 @@ def is_string_validate(str):
     else:
         # 不合法
         return True
+
+#
+def get_secret_key(cryptdata):
+    # print("cryptdata = ", cryptdata)
+    privkey = rsa.PrivateKey.load_pkcs1(RSA_1024_PRIV_KEY)
+    msg = rsa.decrypt(base64.b64decode(cryptdata), privkey)
+    # msg = rsa.decrypt(base64.b64decode(cryptdata), RSA_1024_PRIV_KEY)
+    # print("str(msg) = ", msg)
+    # print("str(msg) = ", msg.decode().split(":")[1])
+    result = {
+        "request_time":msg.decode().split(":")[0],  # 防止爬虫利用这个反复爬取
+        "request_url":msg.decode().split(":")[1],
+        "request_infos": msg.decode().split(":")[2]
+    }
+    # print("result = ", result)
+    return result
 
 
 @app.errorhandler(404)
@@ -81,6 +100,14 @@ def get_cates_infos(book_cate):
         key = get_data['key']
         print("key = ", key)
         secretKey = get_data['secretKey']
+        secret_result = get_secret_key(secretKey)
+        if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
         if book_cate in BOOK_LIST:
             print(key, " is in BOOK_LIST")
             print(key, secretKey)
@@ -135,6 +162,14 @@ def get_book_infos_by_id(book_id):
         get_data = json.loads(request.get_data(as_text=True))
         key = get_data['key']
         secretKey = get_data['secretKey']
+        secret_result = get_secret_key(secretKey)
+        if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
         book = Book()
         sql_data = book.get_book_infos_by_book_id(book_id)
         if key == 'index':
@@ -194,6 +229,16 @@ def get_book_infos_by_id(book_id):
 @app.route('/book/<int:book_id>/<int:sort_id>', methods=['POST'])
 def get_book_detail_infos(book_id, sort_id):
     if request.method == 'POST':
+        get_data = json.loads(request.get_data(as_text=True))
+        secretKey = get_data['secretKey']
+        secret_result = get_secret_key(secretKey)
+        if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
         book = Book()
         sql_book_id_data = book.get_book_infos_by_book_id(book_id)
         if len(sql_book_id_data) == 0:
@@ -248,6 +293,14 @@ def search_infos():
         get_data = json.loads(request.get_data(as_text=True))
         key = get_data['key']
         secretKey = get_data['secretKey']
+        secret_result = get_secret_key(secretKey)
+        if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
         if is_string_validate(key):
             resData = {
                 "resCode": 1, # 非0即错误 1
@@ -279,6 +332,56 @@ def search_infos():
         }
         return jsonify(resData)
 
+
+def is_allow_domain_time(request_time, request_url):
+    if(int(time.time() * 1000) - int(request_time) > 300000):
+        # 一个加密数据只能在3W毫秒之内访问
+        # resData = {
+        #     "resCode": 1, # 非0即错误 1
+        #     "data": [],# 数据位置，一般为数组
+        #     "message": '你猜，你使劲猜'
+        # }
+        # return jsonify(resData)
+        return True
+    if request_url not in REQUSET_LISTS:
+        # 只有指定的域名才能访问
+        # resData = {
+        #     "resCode": 1, # 非0即错误 1
+        #     "data": [],# 数据位置，一般为数组
+        #     "message": '你猜，你使劲猜'
+        # }
+        # return jsonify(resData)
+        return True
+    return False
+
+# 获取关键词的接口
+@app.route('/title', methods=['POST'])
+def get_titles_infos():
+    if request.method == 'POST':
+        get_data = json.loads(request.get_data(as_text=True))
+        key = get_data['key']
+        secretKey = get_data['secretKey']
+        secret_result = get_secret_key(secretKey)
+        if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
+        resData = {
+            "resCode": 0, # 非0即错误 1
+            "data": TITLES[secret_result['request_url']][key],# 数据位置，一般为数组
+            "message": '首页的关键词'
+        }
+        return jsonify(resData)
+    else:
+        resData = {
+            "resCode": 1, # 非0即错误 1
+            "data": [],# 数据位置，一般为数组
+            "message": '请求方法错误'
+        }
+        return jsonify(resData)
 
 @app.route('/', methods=['GET', 'POST']) # 路由
 def hello_world():

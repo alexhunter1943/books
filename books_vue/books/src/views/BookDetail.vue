@@ -14,7 +14,7 @@
         </b-row>
         <b-row class="mb-3">
 
-            <b-col class="normal-center" cols="4" md="4"  v-if="items.detailsItems[0].before_sort_id == ''">
+            <b-col class="normal-center " cols="4" md="4"  v-if="items.detailsItems[0].before_sort_id == ''">
                 <a :href="'/book/'+ items.detailsItems[0].book_id ">上一页</a>
             </b-col>
             <b-col class="normal-center" cols="4" md="4"  v-else>
@@ -85,7 +85,7 @@
 <script>
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
-import { ref, reactive } from "@vue/composition-api";
+import { ref, reactive, onMounted } from "@vue/composition-api";
 import { GetInfoPost } from "../apis/read.js";
 import { replacebr } from "../utils/replaceBr.js"
 
@@ -104,12 +104,30 @@ export default {
 
         const items = reactive({
             detailsItems:[]
-        })
-
+        });   
+        
         GetInfoPost(detailPramas).then(resp => {
-            console.log(resp.data);
-            items.detailsItems = resp.data.data
-        })
+                console.log(resp.data);
+                items.detailsItems = resp.data.data;
+
+                const titlePramas = reactive({
+                    url: '/title',
+                    key: 'bookindex'
+                });
+
+
+
+                GetInfoPost(titlePramas).then(resp => {
+                    document.title = items.detailsItems[0].detail_title+'_'+resp.data.data[0];
+                    document.querySelector('meta[name="keywords"]').setAttribute("content", items.detailsItems[0].detail_title +'_'+items.detailsItems[0].book_name+'_'+resp.data.data[1]);
+                    document.querySelector('meta[name="description"]').setAttribute("content", items.detailsItems[0].detail_title +'_'+items.detailsItems[0].book_name+'_'+resp.data.data[2]);
+                });
+        });
+
+
+        onMounted(()=>{
+            
+        });
         return {
             items,
             replacebr

@@ -618,6 +618,66 @@ Vue.use(BootstrapVueIcons)
 </ul>
 <h1 id="day005-">day005 寂静无声的一天</h1>
 <h1 id="day006">day006</h1>
+<h1 id="day007-rsa">day007 RSA</h1>
+<h2 id="-rsa-">生成RSA密钥对</h2>
+<pre><code class="lang-bash"> // 私钥
+ openssl genrsa -out rsa_1024_priv.pem 1024
+ // cat rsa_1024_priv.pem 读取私钥内容
+ // 公钥
+ openssl rsa -pubout -in rsa_1024_priv.pem -out rsa_1024_pub.pem
+ // cat rsa_1024_pub.pem 读取公钥内容
+</code></pre>
+<h2 id="-vue-rsa-">在vue中使用RSA加密</h2>
+<pre><code class="lang-js">1.安装依赖   npm install jsencrypt  
+2.在main.js引入   import { JSEncrypt } from &#39;jsencrypt&#39;  
+3.挂载全局方法
+//JSEncrypt加密方法
+Vue.prototype.$encryptedData = function(publicKey, data) {
+  //new一个对象
+  let encrypt = new JSEncrypt()
+  //设置公钥
+  encrypt.setPublicKey(publicKey)
+  //password是要加密的数据,此处不用注意+号,因为rsa自己本身已经base64转码了,不存在+,全部是二进制数据
+  let result = encrypt.encrypt(password)
+  return result
+}
+//JSEncrypt解密方法
+Vue.prototype.$decryptData = function(privateKey, data) {
+  // 新建JSEncrypt对象
+  let decrypt = new JSEncrypt()
+  // 设置私钥
+  decrypt.setPrivateKey(privateKey)
+  // 解密数据
+  let result = decrypt.decrypt(secretWord)
+  return result
+}
+</code></pre>
+<h2 id="-flask-rsa-">在flask中使用RSA解密</h2>
+<pre><code class="lang-python">import rsa
+
+
+def get_secret_key(cryptdata):
+    # print(&quot;cryptdata = &quot;, cryptdata)
+    privkey = rsa.PrivateKey.load_pkcs1(RSA_1024_PRIV_KEY)
+    msg = rsa.decrypt(base64.b64decode(cryptdata), privkey)
+    # msg = rsa.decrypt(base64.b64decode(cryptdata), RSA_1024_PRIV_KEY)
+    # print(&quot;str(msg) = &quot;, msg.decode().split(&quot;:&quot;)[1])
+    return msg.decode().split(&quot;:&quot;)[1]
+</code></pre>
+<h2 id="-">我们可以用这个来做什么？</h2>
+<h3 id="-">加密接口的内容</h3>
+<ul>
+<li>时间戳 ： 防止重复使用加密数据。</li>
+<li>域名 ： 只有我们自己指定的域名可以访问我们的接口</li>
+<li>其他信息 ： 未来预留</li>
+</ul>
+<h3 id="-">可以用来做什么？</h3>
+<ul>
+<li>可以简单的防止别人用API快速爬取数据</li>
+<li>可以用来判断是否是自己允许的域名来访问接口</li>
+<li>可以根据不同的域名，给于不同的关键词</li>
+<li>可以根据不同的域名，投放不同或者相同的广告页面</li>
+</ul>
 
           	</article>
         </div>

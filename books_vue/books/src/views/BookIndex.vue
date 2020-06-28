@@ -68,7 +68,7 @@
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
 import { GetInfoPost } from "../apis/read.js";
-import { reactive, ref, onMounted } from "@vue/composition-api";
+import { reactive, ref, onMounted, onBeforeMount } from "@vue/composition-api";
 import dateFormat from "../utils/date.js";
 // import 的时候什么时候没有{}： export default 出现在最后一行的时候，就没有{}
 // 什么时候有{}: export 很多个fanctions的时候，就有{}
@@ -106,12 +106,27 @@ export default {
 
         GetInfoPost(indexParams).then(resp =>{
             console.log("In bookindex resp.data = ", resp.data)
-            items.indexItems = resp.data.data
+            items.indexItems = resp.data.data;
+            
+            console.log("in KKKKKKKKKKKKKKKKKK= ", items.allCapItems)
+            const titlePramas = reactive({
+                url: '/title',
+                key: 'bookindex'
+            });
+
+
+
+            GetInfoPost(titlePramas).then(resp => {
+                console.log("In Home title AAAAAAAAAAAAAAAAAAAAAAAAAA = ", items.indexItems);
+                document.title = items.indexItems[0].book_name+'_'+resp.data.data[0];
+                document.querySelector('meta[name="keywords"]').setAttribute("content", items.indexItems[0].book_name +'_'+resp.data.data[1]);
+                document.querySelector('meta[name="description"]').setAttribute("content", items.indexItems[0].book_desc+'_'+items.indexItems[0].book_name +'_'+resp.data.data[2]);
+            });
 
         });
-        // .then(error=>{
-        //     axios
-        // });
+            // .then(error=>{
+            //     axios
+            // });
 
         GetInfoPost(capAllParams).then(resp =>{
             console.log("In bookindex resp.data = ", resp.data)
@@ -122,12 +137,18 @@ export default {
         GetInfoPost(cap20Params).then(resp =>{
             console.log("In bookindex resp.data = ", resp.data)
             items.newest20CapItems = resp.data.data
-
         });
+
+        
 
         onMounted(()=>{
-            console.log("context.root.$router.path = ", context.root.$route.path)
+
+            
+            
+           
         });
+
+             
 
         return {
             items,
