@@ -1,6 +1,7 @@
 <template>
 <div id="HomeCate">
     <Header />
+    <Ads />
     <b-container class="mt-4 mb-2">
         <div v-if="items.newestItems.length == 0">
             您要查询的分类页面不存在哦
@@ -49,6 +50,7 @@
             </b-row>
             </div>
     </b-container>
+    <AdsFooter />
     <Footer />
 </div>
 </template>
@@ -56,6 +58,8 @@
 <script>
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
+import AdsFooter from "../components/AdsFooter.vue";
+import Ads from "../components/Ads.vue";
 import { ref, reactive, onMounted } from "@vue/composition-api";
 import { GetInfoPost } from "../apis/read.js";
 import dateFormat from "../utils/date.js";
@@ -64,7 +68,9 @@ export default {
     name:"HomeCate",
     components:{
         Header,
-        Footer
+        Footer,
+        AdsFooter,
+        Ads
     },
 
     setup(props, context){

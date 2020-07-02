@@ -37,10 +37,13 @@ REQUSET_LISTS = [
 """
 表1字段：    1、 id
             2、域名
-            3、标识 ：修真
 
-表2字段      1、id
-            2、表1的指定ID（由域名和标识，确认唯一ID）
+表2字段：    1、di
+            2、标识
+
+表3字段      1、id
+            2、表1_id
+            3、表2_id
             3、title
             4、keywords
             5、descriptions
@@ -76,3 +79,58 @@ TITLES = {
         "bookdetail":['风华绝代的alexhunter_bookdetail_标题', '风华绝代的alexhunter_bookdetail_关键词','风华绝代的alexhunter_bookdetail_描述'],
     },
 }
+
+
+PHONE_ADS = [
+    {
+        "url":"http://jidcy.com/",
+        "img_path":"https://i.loli.net/2020/07/01/LYOu8yNXT93E4H1.jpg",
+        "alt": "!@#$%^&"
+    },
+    {
+        "url":"http://www.baidu.com/",
+        "img_path":"https://i.loli.net/2020/07/01/LYOu8yNXT93E4H1.jpg",
+        "alt": "百度"
+    }
+]
+
+PC_ADS = [
+    {
+        "url":"http://jidcy.com/",
+        "img_path":"https://i.loli.net/2020/06/11/MLPaI12eFsyRXck.jpg",
+        "alt": "!@#$%^&"
+    },
+    {
+        "url":"http://www.baidu.com/",
+        "img_path":"https://i.loli.net/2020/06/11/MLPaI12eFsyRXck.jpg",
+        "alt": "百度"
+    }
+]
+
+COL_ADS = [
+    {
+        "url":"http://jidcy.com/",
+        "img_path":"https://i.loli.net/2020/06/11/sDlvEWaeSxzpYgb.jpg",
+        "alt": "!@#$%^&"
+    },
+    {
+        "url":"http://www.163.com/",
+        "img_path":"https://i.loli.net/2020/06/11/sDlvEWaeSxzpYgb.jpg",
+        "alt": "!@#$%^&"
+    },
+    {
+        "url":"http://www.taoba.com/",
+        "img_path":"https://i.loli.net/2020/06/11/sDlvEWaeSxzpYgb.jpg",
+        "alt": "!@#$%^&"
+    },
+    {
+        "url":"http://www.qq.com/",
+        "img_path":"https://i.loli.net/2020/06/11/sDlvEWaeSxzpYgb.jpg",
+        "alt": "!@#$%^&"
+    },
+    {
+        "url":"http://www.baidu.com/",
+        "img_path":"https://i.loli.net/2020/06/11/sDlvEWaeSxzpYgb.jpg",
+        "alt": "百度"
+    }
+]

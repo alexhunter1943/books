@@ -3,5 +3,7 @@ Flask==1.1.2
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
+pyasn1==0.4.8
 PyMySQL==0.9.3
+rsa==4.6
 Werkzeug==1.0.1

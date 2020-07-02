@@ -591,10 +591,8 @@ Vue.use(BootstrapVueIcons)
 - 查询数据
 - 返回结果
 
-## 两张图片的url
 
-- https://i.loli.net/2020/06/11/MLPaI12eFsyRXck.jpg
-- https://i.loli.net/2020/06/11/sDlvEWaeSxzpYgb.jpg
+
 
 
 # day005 寂静无声的一天
@@ -672,3 +670,255 @@ def get_secret_key(cryptdata):
 - 可以用来判断是否是自己允许的域名来访问接口
 - 可以根据不同的域名，给于不同的关键词
 - 可以根据不同的域名，投放不同或者相同的广告页面
+
+# day008
+
+- 忘记了requirements.txt
+- 数据库的表设计不合理
+- secretKey中密码不正确怎么办？并没有处理
+
+
+## 广告
+
+- https://i.loli.net/2020/07/01/LYOu8yNXT93E4H1.jpg  （电脑版）
+- https://i.loli.net/2020/06/11/MLPaI12eFsyRXck.jpg
+- https://i.loli.net/2020/06/11/sDlvEWaeSxzpYgb.jpg （电脑版）
+
+## 查询语句优化
+
+- select * from (select * from book_details where sort_id=447867 ) temp where temp.book_id=43443 \G;
+
+
+# 发布
+
+## 理想状态： 专机专用
+- 数据库服务器： N个服务器，根据地域不同，读写分离，做主从服务器。
+- flask服务器： N服务器和数据库一一对应
+- 后端nginx服务器： 负载均衡
+- scrapy服务器
+- 前端服务器（vue）
+
+## 一般情况
+
+### 数据库、flask、scrapy服务器
+
+- 挂载磁盘
+- 安装mysql、并修改默认保存地址
+- 配置scrapy，使用screen让scrapy在后台执行
+- 安装、配置gunicorn
+- 安装、配置nginx
+
+### 前端服务器
+- 安装宝塔
+- 配置vue
+
+## 数据库、flask、scrapy服务器配置流程
+
+- 更新服务器
+```bash
+yum -y update
+
+yum install wget -y && wget -O auto_disk.sh http://download.bt.cn/tools/auto_disk.sh && bash auto_disk.sh
+
+
+```
+- 挂载磁盘
+- 安装配置mysql，并修改默认保存文件位置
+- 数据库表的建立
+
+```python3
+图书基本信息： book_infos表中信息
+{
+	"id" : 自增,
+	"book_id" : 45761,
+	"book_cate" : "xiuzhen",
+	"book_name" : "九叔的掌门大弟子",
+	"image_urls" : "https://www.biquge.com.cn/files/article/image/45/45761/45761s.jpg",
+	"book_author" : "作    者：莲花山主",
+	"book_status" : "状    态：连载中,",
+	"book_last_update_time" : "最后更新：2020-04-21 19:06:40",
+	"book_newest_name" : "第八十五章：终于到达",
+	"book_newest_url" : "/book/45761/447733.html",
+	"book_desc" : "\n                携带可成长空间重生清末，成为九叔的掌门大弟子。不断成长，并开山立派。\n\t\t\t",
+	"image_paths" : "full/a2a8fbe4a5c01847fb44293891088e1c171bf135.jpg"
+}
+图书详情页信息： book_details 表中信息
+{
+	"_id" : ObjectId("5e9edbb0f16879cb082fcb33"),
+	"book_id" : 32748,
+	"sort_id" : 131839,
+	"detail_title" : "第十九章给上门挑衅",
+	"detail_content" : "    第十九章给上门挑衅    “放了两个月暑假你以为自己乌鸦变凤凰了？居然敢跟我们这么说话？.....(字数不定)"
+}
+1. 在数据库中建立一个数据库： create database books charset=utf8;
+2. 建立两张表
+    2.1 ： create table book_infos(
+                id int unsigned not null auto_increment primary key,
+                book_id int unsigned not null,
+                book_cate varchar(10),  -- 字符串类型，还记得为什么不用var(10)么？
+                book_name varchar(25),  -- 图书名称
+                image_urls varchar(255), -- 图片原来位置
+                book_author varchar(25), -- 图书作者 （需要经过数据清洗）
+                book_status varchar(10), -- 图书状态（其实可以用枚举类型）
+                book_last_update_time datetime, -- 最后更新时间，（需要经过数据清洗）
+                book_newest_name varchar(50), -- 最新章节名称
+                book_newest_url int unsigned, -- 最新章节的地址
+                book_desc varchar(350), -- 图书描述
+                image_paths varchar(50) -- 图片保存路径
+            );
+    2.2 : create table book_details(
+                id bigint unsigned not null auto_increment primary key,  -- 想一下这里为什么用bigint
+                -- 初始化过程中图书大概有450本，假设每本书有3000章：450X3000，但是这仅仅是初始化的过程。
+                -- bigint 0-18446744073709551615 祝你好运
+                book_id int unsigned not null,
+                sort_id int unsigned not null,  -- 排序标记
+                detail_title varchar(50),  -- 该章标题
+                detail_content mediumtext  -- 保存内容
+            );
+3. 去写代码吧，因为mysql更加严苛，所以先用正则把需要清洗的数据，修改一下
+4. 开始写 BiqugeMysqlPipeline 这个类，并在settings中启用它
+```
+- 安装python3和virtualenv,创建和安装scrapy的虚拟环境
+
+```bash
+yum install -y python36-setuptools
+pip3 install virtualenv
+
+virtualenv -p python3 scrapy_env
+source scrapy_env/bin/activate
+
+pip install -r requirements.txt
+```
+- scrapy
+
+- gunicron 和 nginx
+
+```ptyhon3
+pip install gunicorn
+# 安装
+gunicorn -h
+# 查看帮助文档
+gunicorn -w 4 -b IP:PORT -D --access-logfile  main:app
+# -w : worker：表明进程数目
+# -b : bind: 绑定IP和端口号（当然你运行在哪个机器上，就是哪个IP）
+# -D 表明作为守护进程运行在后台
+# --access-logfile ：指定日志文件保存位置（绝对路径）
+# ../../main:app ：指定入口函数位置（绝对路径）
+# 例：
+gunicorn -w 4 -b 222.222.222.222:5000 -D --access-logfile /home/www/YourProgram/log  main:app
+# 这个下面会用到
+
+
+
+ps aux | grep nginx
+# 如果你的服务器中已经存在nginx在运行，
+# 那么这条命令会让你看到正在运行的nginx的配置文件的路径
+# 找到他，然后用下面的命令复制他（免得你改错了）
+sudo cp ../../nginx.conf  ../../nginx.conf.backup
+sudo vim ../../nginx.conf
+# 开始编辑nginx配置
+# 在http{}中的server{}中添加如下内容
+location / {
+    proxy_pass http://flask;
+    # proxy_pass 转发，转发到哪里
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    # 下面这两行的意思是告诉flask或者gunicorn用的IP和路由，不然flask永远获取到的IP信息都是nginx的IP
+}
+正确内容如下：有些内容来自上面
+location / {
+    proxy_pass http://222.222.222.222:5000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+}
+
+
+最终方案：
+
+server{
+    listen 80;
+    server_name http://bookapi.alexhanter1943.com/;
+    location /full/ {
+            root /www/scrapy_robot/biquge/BookImages;
+            autoindex on;
+    }
+    location / {
+            proxy_pass http://43.248.8.5:6661;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+
+
+
+Nginx负载均衡（真实的部署，可能会比上面那个更加真实一点）
+
+
+http {
+    ...
+    upstream flasks {
+        server 222.222.222.222:5555;
+        server 222.222.222.222:6666;
+        server 222.222.222.111:7777;
+        server 222.222.222.222:7777;
+    }
+    # flasks 可以是任意名字
+    # 仔细看上面的端口号和地址，你会发现一些东西哦
+    # 如果你发现了，你就知道什么是负载均衡了
+    ...
+    server{
+        listen  PORT(通常为80);
+        servername IP or url;
+        ...
+        location / {
+            proxy_pass http://flasks;
+            # 注意这里的flasks，要和上面的upstream后面的名字一样了
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            # 下面这两行的意思是告诉flask或者gunicorn用的IP和路由，不然flask永远获取到的IP信息都是nginx的IP
+        }
+        ...
+    }
+    ...
+
+}
+```
+
+## 宝塔
+
+```nginx
+
+#跨域请求数据
+  	location /api {
+  		add_header "Access-Control-Allow-Origin"  *;
+  		proxy_pass http://bookapi.alexhanter1943.com/;
+
+  		proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+  	}
+
+  	location @router {
+  	  rewrite ^.*$ /index.html last;
+  	 }
+  	location / {    
+  	   try_files $uri $uri/ @router;    
+  		index index.html;
+  	}
+
+
+```
+
+## 配置图片
+
+```nginx
+
+location /images/ {
+    root  /home/ftpadmin/health/;
+    autoindex on;
+}  
+
+# 记得修改文件的用户权限
+
+chmod 777 -R /home/ftpadmin
+
+```

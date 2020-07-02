@@ -1,11 +1,14 @@
 <template>
     <div id="BookIndex">
         <Header />
+        <Ads />
             <b-container class="mt-4" v-if="items.indexItems.length == 1">
                 <b-row class="mb-3">
                     <b-col clos="12" md="4"> <!-- 放图片 -->
-                        <b-img thumbnail fluid class="p-3" style="width:80%; margin-left:10%" :src="items.indexItems[0].image_urls" alt="Image 1"></b-img>
+                        <b-img thumbnail fluid class="p-3" style="width:80%; margin-left:10%" :src="baseUrl+items.indexItems[0].image_paths" alt="Image 1"></b-img>
+                    
                     </b-col>
+
                     <b-col  clos="12" md="8"> <!-- 放图书信息 -->
                         
                             <b-jumbotron header-level="0" class="pt-3">
@@ -55,7 +58,7 @@
             </b-container>
 
             
-
+        <AdsFooter />
        <Footer />
     </div>
 </template>
@@ -67,6 +70,8 @@
 <script>
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
+import AdsFooter from "../components/AdsFooter.vue";
+import Ads from "../components/Ads.vue";
 import { GetInfoPost } from "../apis/read.js";
 import { reactive, ref, onMounted, onBeforeMount } from "@vue/composition-api";
 import dateFormat from "../utils/date.js";
@@ -77,7 +82,9 @@ export default {
     name:'BookIndex',
     components:{
         Header,
-        Footer
+        Footer,
+        AdsFooter,
+        Ads
     },
     setup(props, context){
         const now_url = ref(context.root.$route.path)
@@ -107,7 +114,7 @@ export default {
         GetInfoPost(indexParams).then(resp =>{
             console.log("In bookindex resp.data = ", resp.data)
             items.indexItems = resp.data.data;
-            
+
             console.log("in KKKKKKKKKKKKKKKKKK= ", items.allCapItems)
             const titlePramas = reactive({
                 url: '/title',
@@ -144,15 +151,17 @@ export default {
         onMounted(()=>{
 
             
+            console.log("VUE_APP_URLVUE_APP_URLVUE_APP_URLVUE_APP_URL=",baseUrl)
             
            
         });
 
-             
+        const baseUrl = process.env.NODE_ENV === "production" ? process.env.VUE_APP_URL : process.env.VUE_APP_URL;             
 
         return {
             items,
-            dateFormat
+            dateFormat,
+            baseUrl
         }
     }
 

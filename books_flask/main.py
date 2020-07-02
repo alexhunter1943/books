@@ -1,11 +1,12 @@
 from flask import Flask, jsonify, request
 from books import Book
 import json
-from settings import BOOK_LIST, RSA_1024_PRIV_KEY, REQUSET_LISTS, TITLES
+from settings import BOOK_LIST, RSA_1024_PRIV_KEY, REQUSET_LISTS, TITLES, PHONE_ADS, PC_ADS, COL_ADS
 import re
 import rsa
 import base64
 import time
+import random
 
 """
 接口说明：
@@ -35,7 +36,7 @@ def is_string_validate(str):
         # 不合法
         return True
 
-#
+# 解密函数
 def get_secret_key(cryptdata):
     # print("cryptdata = ", cryptdata)
     privkey = rsa.PrivateKey.load_pkcs1(RSA_1024_PRIV_KEY)
@@ -43,11 +44,18 @@ def get_secret_key(cryptdata):
     # msg = rsa.decrypt(base64.b64decode(cryptdata), RSA_1024_PRIV_KEY)
     # print("str(msg) = ", msg)
     # print("str(msg) = ", msg.decode().split(":")[1])
-    result = {
-        "request_time":msg.decode().split(":")[0],  # 防止爬虫利用这个反复爬取
-        "request_url":msg.decode().split(":")[1],
-        "request_infos": msg.decode().split(":")[2]
-    }
+    try:
+        result = {
+            "request_time":msg.decode().split(":")[0],  # 防止爬虫利用这个反复爬取
+            "request_url":msg.decode().split(":")[1],
+            "request_infos": msg.decode().split(":")[2]
+        }
+    except:
+        result = {
+            "request_time":'',  # 防止爬虫利用这个反复爬取
+            "request_url":'',
+            "request_infos": ''
+        }
     # print("result = ", result)
     return result
 
@@ -101,6 +109,14 @@ def get_cates_infos(book_cate):
         print("key = ", key)
         secretKey = get_data['secretKey']
         secret_result = get_secret_key(secretKey)
+        if secret_result['request_time'] == '':
+            # 如果这边返回的是空的，说明请求的数据已经被破坏了
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
         if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
             resData = {
                 "resCode": 1, # 非0即错误 1
@@ -163,6 +179,14 @@ def get_book_infos_by_id(book_id):
         key = get_data['key']
         secretKey = get_data['secretKey']
         secret_result = get_secret_key(secretKey)
+        if secret_result['request_time'] == '':
+            # 如果这边返回的是空的，说明请求的数据已经被破坏了
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
         if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
             resData = {
                 "resCode": 1, # 非0即错误 1
@@ -232,6 +256,14 @@ def get_book_detail_infos(book_id, sort_id):
         get_data = json.loads(request.get_data(as_text=True))
         secretKey = get_data['secretKey']
         secret_result = get_secret_key(secretKey)
+        if secret_result['request_time'] == '':
+            # 如果这边返回的是空的，说明请求的数据已经被破坏了
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
         if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
             resData = {
                 "resCode": 1, # 非0即错误 1
@@ -294,6 +326,14 @@ def search_infos():
         key = get_data['key']
         secretKey = get_data['secretKey']
         secret_result = get_secret_key(secretKey)
+        if secret_result['request_time'] == '':
+            # 如果这边返回的是空的，说明请求的数据已经被破坏了
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
         if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
             resData = {
                 "resCode": 1, # 非0即错误 1
@@ -362,6 +402,14 @@ def get_titles_infos():
         key = get_data['key']
         secretKey = get_data['secretKey']
         secret_result = get_secret_key(secretKey)
+        if secret_result['request_time'] == '':
+            # 如果这边返回的是空的，说明请求的数据已经被破坏了
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
         if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
             resData = {
                 "resCode": 1, # 非0即错误 1
@@ -389,6 +437,100 @@ def hello_world():
     arrData = book.get_books_infos_limit()
     print("arrData = ", arrData)
     return jsonify(arrData)
+
+# 获取横向广告链接的API
+@app.route('/ads' , methods=['POST'])
+def get_row_ads_by_key():
+    if request.method == 'POST':
+        get_data = json.loads(request.get_data(as_text=True))
+        key = get_data['key']
+        secretKey = get_data['secretKey']
+        secret_result = get_secret_key(secretKey)
+        if secret_result['request_time'] == '':
+            # 如果这边返回的是空的，说明请求的数据已经被破坏了
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
+        if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
+        if key == 'pc':
+            data = PHONE_ADS[random.randint(0,len(PHONE_ADS)-1)]
+            resData = {
+                "resCode": 0, # 非0即错误 1
+                "data": data,# 数据位置，一般为数组
+                "message": '该请求返回的直接是一个json数据，不是数组'
+            }
+            return jsonify(resData)
+        elif key == 'phone':
+            data = PC_ADS[random.randint(0,len(PHONE_ADS)-1)]
+            resData = {
+                "resCode": 0, # 非0即错误 1
+                "data": data,# 数据位置，一般为数组
+                "message": '该请求返回的直接是一个json数据，不是数组'
+            }
+            return jsonify(resData)
+        else:
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '请求参数错误'
+            }
+            return jsonify(resData)
+
+    else:
+        resData = {
+            "resCode": 1, # 非0即错误 1
+            "data": [],# 数据位置，一般为数组
+            "message": '请求方法错误'
+        }
+        return jsonify(resData)
+
+# 获取clo广告的链接API
+@app.route('/colads', methods=['POST'])
+def get_col_ads():
+    if request.method == 'POST':
+        get_data = json.loads(request.get_data(as_text=True))
+        secretKey = get_data['secretKey']
+        secret_result = get_secret_key(secretKey)
+        if secret_result['request_time'] == '':
+            # 如果这边返回的是空的，说明请求的数据已经被破坏了
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
+        if is_allow_domain_time(secret_result['request_time'], secret_result['request_url']):
+            resData = {
+                "resCode": 1, # 非0即错误 1
+                "data": [],# 数据位置，一般为数组
+                "message": '你猜，你使劲猜'
+            }
+            return jsonify(resData)
+        data1 = COL_ADS[random.randint(0,len(COL_ADS)-1)]
+        data2 = COL_ADS[random.randint(0,len(COL_ADS)-1)]
+        resData = {
+            "resCode": 0, # 非0即错误 1
+            "data": [data1,data2],# 数据位置，一般为数组
+            "message": '请求成功'
+        }
+        return jsonify(resData)
+    else:
+        resData = {
+            "resCode": 1, # 非0即错误 1
+            "data": [],# 数据位置，一般为数组
+            "message": '请求方法错误'
+        }
+        return jsonify(resData)
+
 
 
 if __name__ == '__main__':

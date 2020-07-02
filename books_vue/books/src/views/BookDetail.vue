@@ -1,6 +1,7 @@
 <template>
 <div id="BookDetail">
     <Header />
+    <Ads />
     <b-container v-if="items.detailsItems.length == 1">
         <b-row class="mt-3">
             <b-col>
@@ -66,6 +67,7 @@
     <b-container v-else>
         您要查询的图书章节不存在哦
     </b-container>
+    <AdsFooter />
     <Footer />
     </div>
     
@@ -74,17 +76,19 @@
 <style lang="scss" scoped>
 #book-detail-title{
     text-align: center;
-    font-size: 24px;
+    font-size: 28px;
 }
 #content-text{
-    line-height: 50px;
-
+    line-height: 40px;
+    font-size: 18px;
 }
 </style>
 
 <script>
 import Header from "../components/Header.vue";
 import Footer from "../components/Footer.vue";
+import AdsFooter from "../components/AdsFooter.vue";
+import Ads from "../components/Ads.vue";
 import { ref, reactive, onMounted } from "@vue/composition-api";
 import { GetInfoPost } from "../apis/read.js";
 import { replacebr } from "../utils/replaceBr.js"
@@ -94,7 +98,9 @@ export default {
     name:"BookDetail",
     components:{
         Header,
-        Footer
+        Footer,
+        AdsFooter,
+        Ads
     },
     setup(props, context){
         const detailPramas = reactive({

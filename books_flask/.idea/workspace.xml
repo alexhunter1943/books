@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50295dd5-72ca-40b7-b239-11382861b6a9" name="Default Changelist" comment="" />
+    <list default="true" id="50295dd5-72ca-40b7-b239-11382861b6a9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../notebooks/notebook.md" beforeDir="false" afterPath="$PROJECT_DIR$/../notebooks/notebook.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../notebooks/preview/notebook.html" beforeDir="false" afterPath="$PROJECT_DIR$/../notebooks/preview/notebook.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +22,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/silenter_read_story/9999_some_tiny_program/biquge/biquge" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="SvnConfiguration">
@@ -33,5 +37,11 @@
       <updated>1592787417833</updated>
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1593413147704">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1593413147704" />
   </component>
 </project>

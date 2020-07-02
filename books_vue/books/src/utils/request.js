@@ -5,7 +5,7 @@ import axios from "axios";
 // console.log("in request.js", process.env.VUE_APP_URL);
 
 // axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '' : '/api';  //关键代码
-const BASEURL = process.env.NODE_ENV === "production" ? "" : "/api";
+const BASEURL = process.env.NODE_ENV === "production" ? "/api" : "/api";
 // console.log("in request.js: BASEURL = ", BASEURL);
 
 // 创建axios

@@ -1,5 +1,5 @@
 <template>
-    <b-container>
+    <b-container id="Header">
       <b-navbar toggleable="lg" type="dark" variant="info">
         <b-navbar-brand href="#">嗨小说</b-navbar-brand>
 
@@ -78,5 +78,9 @@ export default {
 </script>
 
 <style lang="scss" scoped> // lang告诉解释其css符合什么编译器的语法; scoped：当前vue文件生效，没有scoped则全局生效
-
+@media (max-width:500px) {
+  #Header{
+    margin-top:90px
+  }
+}
 </style>
