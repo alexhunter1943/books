@@ -922,3 +922,67 @@ location /images/ {
 chmod 777 -R /home/ftpadmin
 
 ```
+# 项目总结
+
+## 总结之前先处理一点小问题
+
+- 发布过程中忘记改flask中的默认地址了
+- 去掉flask中不必要的配置
+
+## 没有难的内容，或者说没有无法理解的内容，只是多而杂。
+
+总结起来就是，你要相信你自己，肯定可以。
+
+## 为什么这个视频中没有包含scrapy的内容，以及scrapy如何写的思路
+
+## 如何快速把扩展网站
+
+从1个图书网站，到1000个图书网站！
+
+- 解析域名到宝塔所在的服务器 dns.com
+- 修改flask中的settings.py文件，把你的域名加入到允许访问的域名中去
+- 修改vue中的read.js的域名
+- 编译vue，并上传到宝塔 npm run build
+- 在宝塔中新建网站，并配置nginx
+- 在浏览器中访问，你自己的域名。
+
+## 配置一个大家可以使用的数据库
+
+mysql -h 43.248.8.5 -u alexhunter1943 -p
+
+QWEqwe123！@#
+
+## todo
+
+- 写一个首页
+- 写一个后台管理系统来操作所有的1000个网站
+```
+1.控制哪些域名可以访问
+2.控制不同的域名，可以有不同的关键词
+3.控制广告图片，和广告链接（因为肯定会有N多的广告的）
+```
+- 写一个用户登录系统
+- 写一个能够记录某本图书的被查看的次数
+- 分析每本图书的词图（数据分析）  --> 一个更好搜索系统
+- 写一个用户推荐图书的系统
+
+## 抱歉，没有讲原理
+
+## 技术栈
+
+### vue3.0
+
+- vue3.0特性 ：import VueCompositionApi from "@vue/composition-api";
+- 排版： import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
+- 请求： axios
+- 加密： import { rsaEncrypt } from "../utils/rsa.js";
+
+### flask
+
+- flask
+- pymysql
+
+
+## 人生苦短，道阻且长
+
+江湖再见。  2020.07.05
